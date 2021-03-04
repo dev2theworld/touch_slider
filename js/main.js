@@ -26,6 +26,13 @@ let isDragging = false,
     slide.addEventListener('mousemove', touchMove);
   });
 
+  // Context manu disabled
+  window.oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+
   function touchStart(index) {
     // we must return function with event object since we're calling it earlier with index parameter
     return function(event) {
