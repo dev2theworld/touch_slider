@@ -1,7 +1,7 @@
 const slider = document.querySelector('.slide-container'),
-  slides = Array.from(document.querySelector('.slide'));
+  slides = Array.from(document.querySelectorAll('.slide'));
 
-let isDraggins = false,
+let isDragging = false,
   startPosition = 0,
   currentTranslate = 0,
   previousTranslate = 0,
@@ -12,7 +12,7 @@ let isDraggins = false,
 
     // preventing click & drag img effect
     const slideImage = slide.querySelector('img');
-    slideImage.addEventListener('dragstart', (e) => e.preventDefaul());
+    slideImage.addEventListener('dragstart', (e) => e.preventDefault());
 
     // Touch events
     slide.addEventListener('touchstart', touchStart(index));
@@ -29,14 +29,16 @@ let isDraggins = false,
   function touchStart(index) {
     // we must return function with event object since we're calling it earlier with index parameter
     return function(event) {
-      console.log('start');
+      isDragging = true;
     }
   }
 
   function touchEnd() {
-    console.log('end');
+    isDragging = false;
   }
 
   function touchMove() {
-    console.log('move');
+    if (isDragging) {
+      console.log('move');
+    }
   }
