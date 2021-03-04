@@ -36,6 +36,8 @@ let isDragging = false,
   function touchStart(index) {
     // we must return function with event object since we're calling it earlier with index parameter
     return function(event) {
+      currentIndex = index;
+      startPosition = getPositionX(event);
       isDragging = true;
     }
   }
@@ -48,4 +50,10 @@ let isDragging = false,
     if (isDragging) {
       console.log('move');
     }
+  }
+
+  function getPositionX(event) {
+    return event.type.includes('mouse')
+    ? event.pageX
+    : event.touches[0].clientX;
   }
