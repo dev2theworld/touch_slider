@@ -39,16 +39,20 @@ let isDragging = false,
       currentIndex = index;
       startPosition = getPositionX(event);
       isDragging = true;
+
+      animationID = requestAnimationFrame(animation);
     }
   }
 
   function touchEnd() {
     isDragging = false;
+    cancelAnimationFrame(animationID);
   }
 
-  function touchMove() {
+  function touchMove(event) {
     if (isDragging) {
-      console.log('move');
+      const currentPosition = getPositionX(event);
+      currentTranslate = previousTranslate + currentPosition - startPosition;
     }
   }
 
@@ -56,4 +60,13 @@ let isDragging = false,
     return event.type.includes('mouse')
     ? event.pageX
     : event.touches[0].clientX;
+  }
+
+  function animation() {
+    setSliderPosition();
+    if(isDragging) requestAnimationFrame(animation)
+  }
+
+  function setSliderPosition() {
+    slider.style.transform = `translateX(${currentTranslate}px)`;
   }
