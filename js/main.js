@@ -49,6 +49,14 @@ let isDragging = false,
     isDragging = false;
     cancelAnimationFrame(animationID);
 
+    const movedBy = currentTranslate - previousTranslate;
+
+    if(movedBy < -100 && currentIndex < slides.length -1) currentIndex += 1;
+
+    if(movedBy > 100 && currentIndex > 0) currentIndex -= 1;
+
+    setPositionByIndex();
+
     slider.classList.remove('grabbing');
   }
 
@@ -67,9 +75,15 @@ let isDragging = false,
 
   function animation() {
     setSliderPosition();
-    if(isDragging) requestAnimationFrame(animation)
+    if(isDragging) requestAnimationFrame(animation);
   }
 
   function setSliderPosition() {
     slider.style.transform = `translateX(${currentTranslate}px)`;
+  }
+
+  function setPositionByIndex() {
+    currentTranslate = currentIndex * -window.innerWidth;
+    previousTranslate = currentTranslate;
+    setSliderPosition();
   }
